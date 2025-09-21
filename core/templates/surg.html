@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Surgical Procedures - Crescent Veterinary Clinic</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    .service-section {
+      background-color: #eef7fc;
+      padding: 30px 25px;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(111, 168, 220, 0.15);
+    }
+    .service-section h3 {
+      color: #3f4c5c;
+      margin-bottom: 15px;
+      font-weight: 700;
+      border-left: 5px solid #6fa8dc;
+      padding-left: 12px;
+    }
+    .service-section p {
+      color: #334352;
+      font-size: 1.1em;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <h1>Crescent Veterinary Clinic</h1>
+      <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a class="active" href="{% url 'services' %}">Services</a></li>
+        <li><a href="{% url 'home' %}#about">About Us</a></li>
+        <li><a href="{% url 'home' %}#contact">Contact Us</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section-padded">
+      <div class="container">
+        <h2 style="color:#3f4c5c; margin-bottom: 25px;">Surgical Procedures</h2>
+        <p class="section-description" style="color:#64788a; max-width:700px; margin: 0 auto 40px;">
+          Our surgical team provides expert care using advanced techniques and equipment to ensure your pet's safety and comfort during all procedures.
+        </p>
+
+        <div class="service-section">
+          <h3><i class="fas fa-cut" style="color:#6fa8dc; margin-right: 10px;"></i> Routine Surgeries</h3>
+          <p>Including spaying and neutering to prevent unwanted litters and reduce health risks.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-procedures" style="color:#6fa8dc; margin-right: 10px;"></i> Soft Tissue Surgery</h3>
+          <p>Treatments for injuries, tumors, and internal organ concerns, performed with precision and care.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-bone" style="color:#6fa8dc; margin-right: 10px;"></i> Orthopedic Surgery</h3>
+          <p>Repair of fractures, joint issues, and other bone-related conditions to restore mobility and function.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-heartbeat" style="color:#6fa8dc; margin-right: 10px;"></i> Minimally Invasive Surgery</h3>
+          <p>Utilizing laparoscopic techniques for quicker recovery and less discomfort.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-user-md" style="color:#6fa8dc; margin-right: 10px;"></i> Pre- and Post-Operative Care</h3>
+          <p>Comprehensive monitoring and pain management before, during, and after surgery for optimal healing.</p>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Crescent Veterinary Clinic. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

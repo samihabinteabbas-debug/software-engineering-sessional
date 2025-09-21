@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Account • Crescent Veterinary Clinic</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  <div class="login-container">
+    <h2 class="login-title">Create your account</h2>
+    <form method="post" action="{% url 'signup' %}" class="login-form">
+    
+      {% csrf_token %}
+      <label for="first_name">First Name:</label>
+      <input type="text" name="first_name">
+      <label for="last_name">Last Name:</label>
+      <input type="text" name="last_name">
+
+      <label for="email">Email:</label>
+      <input type="email" name="email">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit" class="btn primary full-width">Sign Up</button>
+    </form>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('.login-form');
+  const inputs = {
+    first_name: document.querySelector('[name="first_name"]'),
+    last_name: document.querySelector('[name="last_name"]'),
+    email: document.querySelector('[name="email"]'),
+    username: document.getElementById('username'),
+    password: document.getElementById('password')
+  };
+
+  Object.keys(inputs).forEach(field => {
+    const errorMsg = document.createElement('div');
+    errorMsg.className = 'error-message';
+    inputs[field].insertAdjacentElement('afterend', errorMsg);
+  });
+
+  function validateName(name) {
+    return /^[A-Za-z]{2,30}$/.test(name.trim());
+  }
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  }
+
+  function validateUsername(username) {
+    return /^[A-Za-z0-9_]{3,20}$/.test(username.trim());
+  }
+
+  function validatePassword(password) {
+    return password.length >= 8;
+  }
+
+
+  Object.keys(inputs).forEach(field => {
+    inputs[field].addEventListener('input', validateField);
+    inputs[field].addEventListener('blur', validateField);
+  });
+
+  function validateField(e) {
+    const field = e.target.name || e.target.id;
+    const value = e.target.value;
+    let isValid = true;
+    let errorText = '';
+
+    switch(field) {
+        case 'email':
+          isValid = validateEmail(value);
+          errorText = 'Invalid email format';
+          break;
+        case 'username':
+          isValid = validateUsername(value);
+          errorText = '3-20 chars (letters, numbers, _)';
+          break;
+        case 'password':
+          isValid = validatePassword(value);
+          errorText = 'Minimum 8 characters';
+          break;
+      }
+      const errorMsg = e.target.nextElementSibling;
+      if (!isValid && value) {
+        errorMsg.textContent = errorText;
+        e.target.style.borderColor = 'red';
+      } else {
+        errorMsg.textContent = '';
+        e.target.style.borderColor = '';
+      }
+      return isValid;
+    }
+    form.addEventListener('submit', function(e) {
+      let formIsValid = true;
+      
+      Object.keys(inputs).forEach(field => {
+        const isValid = validateField({ 
+          target: inputs[field], 
+          value: inputs[field].value 
+        });
+        if (!isValid) formIsValid = false;
+      });
+
+      if (!formIsValid) {
+        e.preventDefault();
+        alert('Please fix errors before submitting');
+      }
+    });
+  });
+  </script>
+
+
+    <p class="register-link">
+      Already have an account?
+      <a href="{% url 'login' %}">Login</a>
+    </p>
+  </div>
+</body>
+</html>

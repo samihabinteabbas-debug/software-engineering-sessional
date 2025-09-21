@@ -1,0 +1,454 @@
+/* General Styling */
+body {
+  margin: 0;
+  font-family: 'Trebuchet MS', sans-serif; /* New Font */
+  background-color: #fdfbf8; /* Very soft, warm off-white */
+  color: #4a4a4a; /* Darker, soft grey for main text */
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Navigation Bar */
+nav {
+  background-color: #eef7fc; /* Match body background for continuity */
+  padding: 15px 0;
+  /*box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03); /* Lighter shadow */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  /*border-bottom: 1px solid #eee; /* Subtle bottom border */
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav h1 {
+  margin: 0;
+  color: #3f4c5c; /* Deep muted blue-grey for brand name */
+  font-size: 1.9em;
+  font-weight: 800; /* Bolder for impact */
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 35px; /* Slightly more space */
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li a {
+  color: #64788a; /* Muted grey-blue for links */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #7caedd; /* Our new accent blue on hover */
+}
+nav ul li a.active {
+  color: #313c49 !important;
+  border-bottom: 2px solid #313c49;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 200px 0;
+  background: linear-gradient(to bottom, #eef7fc, #819cb3); /* Soft cool gradient */
+  color: #3f4c5c; /* Cohesive text color with nav brand */
+  margin-bottom: 70px; /* More space below hero */
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05); /* Soft shadow */
+}
+
+.hero h2 {
+  font-size: 3.5em; /* Larger and more impactful */
+  margin-bottom: 15px;
+  font-weight: 800; /* Bolder */
+  color: #313c49;
+}
+
+.hero p {
+  font-size: 1.25em; /* Slightly larger and more inviting */
+  max-width: 650px; /* Wider text line */
+  margin: 0 auto 40px; /* More space below paragraph */
+  color: #313c49; /* Softer text color */
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 16px 35px; /* Larger padding for a more substantial button */
+  font-size: 1.15em; /* Slightly larger font */
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 35px; /* Slightly more rounded */
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.1); /* Slightly more prominent shadow */
+  border: 2px solid #313c49;
+}
+
+.btn.primary {
+  background-color: transparent; /* Muted, sophisticated blue */
+  color: #313c49;
+}
+
+.btn.primary:hover {
+  background-color: #313c49; /* Darker on hover */
+  color: white;
+  transform : translateY(-3px); /* More pronounced lift */
+  box-shadow : 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.btn.secondary {
+  background-color: transparent; /* Transparent background */
+  color: #6fa8dc; /* Accent color text */
+  border: 2px solid #6fa8dc; /* Accent color border */
+  box-shadow: none;
+}
+
+.btn.secondary:hover {
+  background-color: #6fa8dc;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Section Styling */
+.section-padded {
+  padding: 90px 0; /* More consistent vertical padding for sections */
+}
+
+.section-padded h2 {
+  text-align: center;
+  font-size: 3em; /* Larger section titles */
+
+  margin-bottom: 25px;
+  font-weight: 800;
+}
+
+.section-padded .section-description {
+  text-align: center;
+  font-size: 1.15em;
+  color: #95aec4;
+  max-width: 750px;
+  margin: 0 auto 60px; /* More space below description */
+}
+
+.subtle-bg {
+  position: relative;
+  background: url("images/vetwithpet.jpg") center/cover no-repeat;
+  color: #ffffff;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.subtle-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6));
+  backdrop-filter: blur(2px);
+  z-index: -1;
+}
+
+/* Services Section */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 35px;
+  margin-top: 40px;
+}
+
+.service-item {
+  background-color: #ffffff;
+  padding: 35px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #f0f0f0;
+}
+
+.service-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.service-item h3 {
+  color: #6fa8dc;
+  font-size: 1.8em;
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+.service-item h3 a { /* This is the new rule you need */
+  text-decoration: none; /* Removes the underline from links within service item paragraphs */
+  color: inherit; /* Optional: Makes the link color inherit from the parent paragraph */
+}
+.service-item p {
+  color: #334352;
+  font-size: 1.05em;
+  text-decoration: none;
+}
+.service-item-link { /* Target the anchor tag that wraps the entire service item */
+  text-decoration: none; /* Remove underline from the link itself */
+  color: inherit; /* Ensure the text color within the link is inherited from its parents, not the default blue link color */
+}
+.service-item-link .service-item h3 {
+  color: #6fa8dc; /* Keep your existing color for the heading */
+  font-size: 1.8em;
+  margin-bottom: 18px;
+  font-weight: 700;
+  text-decoration: none; /* Explicitly remove any potential inherited underline from heading */
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  height: 16px;
+}
+
+input {
+  margin-bottom: 8px;
+}
+
+input:invalid {
+  border-color: red;
+}
+.service-item-link .service-item p {
+  color: #334352; /* Keep your existing color for the paragraph */
+  font-size: 1.05em;
+  text-decoration: none; /* Explicitly remove any potential inherited underline from paragraph */
+}
+/* About Us Section */
+.about-content {
+  text-align: center;
+}
+
+.subtle-bg h2,
+.subtle-bg p,
+.subtle-bg .btn.secondary {
+  color: #ffffff;
+}
+
+.subtle-bg .btn.secondary {
+  border-color: #ffffff;
+}
+
+.subtle-bg .btn.secondary:hover {
+  background-color: #ffffff;
+  color: #6fa8dc;
+}
+
+/* Contact Us Section */
+.contact-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  /* Removed margin-bottom as the form is gone */
+}
+
+.contact-item {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 19px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  border: 1px solid #f0f0f0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.contact-item i {
+  font-size: 2em;
+  color: #6fa8dc;
+  margin-bottom: 20px;
+}
+
+.contact-item h3 {
+  color: #3f4c5c;
+  font-size: 1.6em;
+  margin-bottom: 10px;
+}
+
+.contact-item p {
+  color: #4a4a4a;
+  font-size: 1.05em;
+}
+
+.contact-item p a {
+  color: #6fa8dc;
+  text-decoration: none;
+}
+
+.contact-item p a:hover {
+  text-decoration: underline;
+}
+
+/* Stay With Us Section (Social Media) */
+.social-section {
+  text-align: center;
+  background-color: #eef7fc;
+  padding: 20px 0;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background-color: #6fa8dc;
+  color: white;
+  border-radius: 50%;
+  font-size: 1.8em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.social-links a:hover {
+  background-color: #5a95c9;
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px 0;
+  background-color: #ffffff;
+  color: #4a4a4a;
+  font-size: 0.95em;
+  margin-top: 30px;
+  border-top: 1px solid #eee;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero {
+    padding: 80px 0;
+    /* Adjust these values for mobile if needed, or remove to use desktop values */
+    border-radius: 0 0 50% 50% / 0 0 70px 70px; /* Softer curve on smaller screens */
+  }
+  .hero h2 {
+    font-size: 2.8em;
+  }
+
+  .hero p {
+    font-size: 1.1em;
+  }
+
+  nav .container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  nav ul {
+    gap: 20px;
+  }
+
+
+  nav h1 {
+    font-size: 1.6em;
+  }
+
+  .section-padded {
+    padding: 20px 0;
+  }
+
+  .section-padded h2 {
+    font-size: 2.5em;
+  }
+
+  .section-padded .section-description {
+    font-size: 1.05em;
+    margin-bottom: 20px;
+  }
+
+  .service-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-content {
+    padding: 60px 0;
+  }
+
+  .btn {
+    padding: 14px 28px;
+    font-size: 1.05em;
+  }
+
+  /* Contact Us Responsive */
+  .contact-info {
+    grid-template-columns: 1fr;
+  }
+
+  /* Social Media Responsive */
+  .social-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+/* ---------- Forms / Auth ---------- */
+.login-container {
+  max-width: 420px;
+  margin: 120px auto;
+  padding: 40px 50px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+.login-title { margin-bottom: 25px; color: #3f4c5c; }
+
+.login-form { display: flex; flex-direction: column; gap: 18px; }
+
+.login-form label   { font-weight: 600; text-align: left; color: #334352; }
+.login-form input   { padding: 12px; border: 1px solid #ccd5e0; border-radius: 10px; }
+.login-form input:focus { outline: 2px solid #6fa8dc; }
+
+.full‑width { width: 100%; }
+
+.register-link { margin-top: 22px; font-size: .95em; color: #6a7f92; }
+.register-link a { color: #6fa8dc; text-decoration: none; }
+.back-link      { display: inline-block; margin-top: 35px; color: #6a7f92; font-size: .9em; }
+
+@media (max-width: 768px) {
+  .login-container { margin: 80px 20px; padding: 35px 25px; }
+}
+
+/* ---------- Appointment form ---------- */
+.container.narrow { max-width: 600px; }
+.appt-form       { display: flex; flex-direction: column; gap: 18px; }
+.appt-form input,
+.appt-form textarea { padding: 12px; border: 1px solid #ccd5e0; border-radius: 10px; }
+.appt-form textarea { resize: vertical; }
+
+

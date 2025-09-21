@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Preventative Care - Crescent Veterinary Clinic</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    /* Additional styles for enhanced sectioning and color */
+    .service-section {
+      background-color: #eef7fc;
+      padding: 30px 25px;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(111, 168, 220, 0.15);
+    }
+
+    .service-section h3 {
+      color: #3f4c5c;
+      margin-bottom: 15px;
+      font-weight: 700;
+      border-left: 5px solid #6fa8dc;
+      padding-left: 12px;
+    }
+
+    .service-section p {
+      color: #334352;
+      font-size: 1.1em;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .treatment-list {
+      list-style-type: disc;
+      padding-left: 20px;
+      color: #334352;
+    }
+
+    .treatment-list li {
+      margin-bottom: 10px;
+      font-size: 1.05em;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <h1>Crescent Veterinary Clinic</h1>
+      <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a class="active" href="{% url 'services' %}">Services</a></li>
+        <li><a href="{% url 'home' %}#about">About Us</a></li>
+        <li><a href="{% url 'home' %}#contact">Contact Us</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section-padded">
+      <div class="container">
+        <h2 style="color:#3f4c5c; margin-bottom: 25px;">Preventative Care</h2>
+        <p class="section-description" style="color:#64788a; max-width:700px; margin: 0 auto 40px;">
+          Preventative care is the cornerstone of maintaining your pet’s health and longevity. Through a comprehensive range of wellness services, we work proactively to keep your pets safe, comfortable, and thriving.
+        </p>
+
+        <div class="service-section">
+          <h3><i class="fas fa-stethoscope" style="color:#6fa8dc; margin-right: 10px;"></i> Wellness Exams</h3>
+          <p>Our thorough physical exams help detect any early signs of illness or health concerns before they become serious problems. Each exam is personalized for your pet’s age, breed, and lifestyle.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-syringe" style="color:#6fa8dc; margin-right: 10px;"></i> Vaccinations</h3>
+          <p>We provide all core and non-core vaccines tailored to your pet's risk factors, ensuring protection against common and serious infectious diseases.</p>
+          <ul class="treatment-list">
+            <li>Rabies</li>
+            <li>Distemper</li>
+            <li>Parvovirus</li>
+            <li>Bordetella (Kennel Cough)</li>
+            <li>Leptospirosis</li>
+          </ul>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-bug" style="color:#6fa8dc; margin-right: 10px;"></i> Parasite Prevention</h3>
+          <p>We offer effective flea, tick, and heartworm prevention plans designed to protect your pets year-round from these dangerous parasites.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-apple-alt" style="color:#6fa8dc; margin-right: 10px;"></i> Nutritional Counseling</h3>
+          <p>Our team will assess your pet’s diet and recommend the best nutrition plan to promote optimal health, weight management, and vitality.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-brain" style="color:#6fa8dc; margin-right: 10px;"></i> Behavioral Assessments</h3>
+          <p>Early detection of behavioral problems can improve your pet’s quality of life. We provide assessments and advice tailored to your pet’s needs.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Crescent Veterinary Clinic. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

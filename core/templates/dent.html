@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dental Care - Crescent Veterinary Clinic</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    .service-section {
+      background-color: #eef7fc;
+      padding: 30px 25px;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(111, 168, 220, 0.15);
+    }
+    .service-section h3 {
+      color: #3f4c5c;
+      margin-bottom: 15px;
+      font-weight: 700;
+      border-left: 5px solid #6fa8dc;
+      padding-left: 12px;
+    }
+    .service-section p {
+      color: #334352;
+      font-size: 1.1em;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <h1>Crescent Veterinary Clinic</h1>
+      <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a class="active" href="{% url 'services' %}">Services</a></li>
+        <li><a href="{% url 'home' %}#about">About Us</a></li>
+        <li><a href="{% url 'home' %}#contact">Contact Us</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section-padded">
+      <div class="container">
+        <h2 style="color:#3f4c5c; margin-bottom: 25px;">Dental Care</h2>
+        <p class="section-description" style="color:#64788a; max-width:700px; margin: 0 auto 40px;">
+          Oral health is critical to your pet’s overall well-being. We provide comprehensive dental services to prevent, diagnose and treat dental diseases.
+        </p>
+
+        <div class="service-section">
+          <h3><i class="fas fa-tooth" style="color:#6fa8dc; margin-right: 10px;"></i> Dental Exams</h3>
+          <p>Routine dental check-ups to assess your pet’s oral health, look for early warning signs and identify any issues before it gets too serious.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-syringe" style="color:#6fa8dc; margin-right: 10px;"></i> Professional Cleanings</h3>
+          <p>Thorough cleaning under anesthesia to remove plaque, tartar, and prevent periodontal disease.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-tooth" style="color:#6fa8dc; margin-right: 10px;"></i> Extractions</h3>
+          <p>Safe removal of damaged or diseased teeth to relieve pain and prevent infection.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-stethoscope" style="color:#6fa8dc; margin-right: 10px;"></i> Oral Surgery</h3>
+          <p>Treatment of oral tumors, injuries, and other complex dental conditions.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-heart" style="color:#6fa8dc; margin-right: 10px;"></i> Dental Care Advice</h3>
+          <p>General guidance on brushing, diet, and products to maintain your pet’s oral health in-between visits.</p>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Crescent Veterinary Clinic. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

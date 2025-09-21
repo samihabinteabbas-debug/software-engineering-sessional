@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Emergency Services - Crescent Veterinary Clinic</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    .service-section {
+      background-color: #eef7fc;
+      padding: 30px 25px;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(111, 168, 220, 0.15);
+    }
+    .service-section h3 {
+      color: #3f4c5c;
+      margin-bottom: 15px;
+      font-weight: 700;
+      border-left: 5px solid #6fa8dc;
+      padding-left: 12px;
+    }
+    .service-section p {
+      color: #334352;
+      font-size: 1.1em;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <h1>Crescent Veterinary Clinic</h1>
+      <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a class="active" href="{% url 'services' %}">Services</a></li>
+        <li><a href="{% url 'home' %}#about">About Us</a></li>
+        <li><a href="{% url 'home' %}#contact">Contact Us</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section-padded">
+      <div class="container">
+        <h2 style="color:#3f4c5c; margin-bottom: 25px;">Emergency Services</h2>
+        <p class="section-description" style="color:#64788a; max-width:700px; margin: 0 auto 40px;">
+          We understand that emergencies can be frightening. Our experienced team is ready to provide rapid, compassionate care during your pet’s critical moments.
+        </p>
+
+        <div class="service-section">
+          <h3><i class="fas fa-ambulance" style="color:#6fa8dc; margin-right: 10px;"></i> Urgent Medical Care</h3>
+          <p>Treatment for trauma, poisoning, sudden illness, and other urgent conditions that require immediate attention.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-prescription-bottle-alt" style="color:#6fa8dc; margin-right: 10px;"></i> Emergency Diagnostics</h3>
+          <p>On-site blood work, imaging, and other diagnostics to rapidly assess your pet’s condition.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-procedures" style="color:#6fa8dc; margin-right: 10px;"></i> Emergency Surgery</h3>
+          <p>Life-saving surgical procedures performed by experts when necessary.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-heart" style="color:#6fa8dc; margin-right: 10px;"></i> Critical Care Monitoring</h3>
+          <p>Continuous monitoring and supportive care to stabilize and improve your pet’s condition.</p>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Crescent Veterinary Clinic. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

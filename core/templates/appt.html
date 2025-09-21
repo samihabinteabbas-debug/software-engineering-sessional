@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Book an Appointment - Crescent Veterinary Clinic</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* Existing CSS kept as-is */
+        .appointment-form-section {
+            padding: 80px 0;
+            background-color: #f9f9f9;
+        }
+        .appointment-form-section .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .appointment-form-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .form-group input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 20px auto 0;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        @media (max-width: 768px) {
+            .appointment-form-section .container {
+                padding: 20px;
+                margin: 0 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <h1>Crescent Veterinary Clinic</h1>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'services' %}">Services</a></li>
+                <li><a href="{% url 'home' %}#about">About Us</a></li>
+                <li><a href="{% url 'home' %}#contact">Contact Us</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="appointment-form-section">
+            <div class="container">
+                <h2>Book Your Appointment</h2>
+                <p class="section-description" style="text-align: center; margin-bottom: 20px;">
+                    Please fill out the form below to request an appointment. We will contact you to confirm the details.
+                </p>
+
+                <form action="{% url 'appt' %}" method="post" id="appointment-form">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="owner_name">Your Full Name:</label>
+                        <input type="text" id="owner_name" name="owner_name" required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="owner_phone">Phone Number:</label>
+                        <input type="tel" id="owner_phone" name="owner_phone" placeholder="e.g., +1234567890" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pet_name">Pet's Name:</label>
+                        <input type="text" id="pet_name" name="pet_name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pet_species">Pet's Species:</label>
+                        <select id="pet_species" name="pet_species" required>
+                            <option value="">Select Species</option>
+                            <option value="dog">Dog</option>
+                            <option value="cat">Cat</option>
+                            <option value="bird">Bird</option>
+                            <option value="rabbit">Rabbit</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                                        <div class="form-group">
+                        <label for="pet_age">Pet Age(years)</label>
+                        <input type="text" class="form-control" id="pet_age" name="pet_age" 
+                            placeholder="e.g., 2 years, 6 months, etc.">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pet_weight">Pet Weight (kg)</label>
+                        <input type="text" class="form-control" id="pet_weight" name="pet_weight" 
+                            placeholder="e.g., 5.2 kg">
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Select a Service:</label>
+                        <select id="service" name="service" required>
+                            <option value="">Select a service</option>
+                            <option value="Preventive Care">Preventive Care</option>
+                            <option value="Surgical Procedures">Surgical Procedures</option>
+                            <option value="Dental Care">Dental Care</option>
+                            <option value="Diagnostic Imaging">Diagnostic Imaging</option>
+                            <option value="Emergency Services">Emergency Services</option>
+                            <option value="Nutritional Counseling">Nutritional Counseling</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="appointment_date">Preferred Date:</label>
+                        <input type="date" id="appointment_date" name="appointment_date" required min="{{ today_date|date:'Y-m-d' }}" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointment_time">Preferred Time:</label>
+                        <input type="time" id="appointment_time" name="appointment_time" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reason">Reason for Appointment:</label>
+                        <textarea id="reason" name="reason" rows="5" placeholder="e.g., Annual check-up, vaccination, limping, dental cleaning, etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Request Appointment" />
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const phoneInput = document.getElementById('owner_phone');
+        const form = document.getElementById('appointment-form');
+        const errorMsg = document.createElement('div');
+        errorMsg.className = 'error-message';
+        errorMsg.style.color = 'red';
+        phoneInput.parentNode.appendChild(errorMsg);
+        phoneInput.addEventListener('input', validatePhone);
+        phoneInput.addEventListener('blur', validatePhone);
+        function validatePhone() {
+            const phone = phoneInput.value.trim();
+            const phonePattern = /^\+?\d{11}$/;           
+            if (!phonePattern.test(phone)) {
+                errorMsg.textContent = "Please enter a valid phone number with exactly 11 digits.";
+                phoneInput.style.borderColor = 'red';
+                return false;
+            }
+        }
+    });
+    </script>
+    <footer>
+        <div class="container">
+            <p>© 2025 Crescent Veterinary Clinic. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

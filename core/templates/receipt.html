@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Receipt</title>
+    <style>
+        /* A4 page settings */
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 15mm;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        .receipt-container {
+            background: white;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 25px;
+            max-width: 100%;
+            margin: 0 auto;
+            box-sizing: border-box;
+            border-radius: 5px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #4a8fcc;
+            padding-bottom: 15px;
+        }
+        
+        .clinic-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a5f9e;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+        
+        .clinic-info {
+            font-size: 14px;
+            color: #666;
+            margin: 8px 0;
+        }
+        
+        .receipt-title {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin: 25px 0;
+            color: #2c3e50;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .receipt-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .detail-section {
+            background: #f5f9ff;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #4a8fcc;
+        }
+        
+        .section-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #2c3e50;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px;
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            min-width: 140px;
+            color: #555;
+        }
+        
+        .detail-value {
+            flex: 1;
+        }
+        
+        .payment-section {
+            background: #f0f8f0;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 25px 0;
+            border-left: 4px solid #38b673;
+            text-align: center;
+        }
+        
+        .payment-amount {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2e8540;
+            margin: 10px 0;
+        }
+        
+        .payment-status {
+            font-size: 16px;
+            font-weight: bold;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        
+        .status-paid {
+            background: #e2f3e6;
+            color: #2e8540;
+        }
+        
+        .status-pending {
+            background: #fef3cd;
+            color: #856404;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .print-btn {
+            display: block;
+            margin: 30px auto 15px;
+            padding: 12px 30px;
+            background: #1a5f9e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .print-btn:hover {
+            background: #134b80;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .receipt-container {
+                box-shadow: none;
+                padding: 15px;
+            }
+            
+            .print-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-container">
+        <div class="header">
+            <h1 class="clinic-name">CRESCENT VETERINARY CLINIC</h1>
+            <div class="clinic-info">
+                123, Rajshahi, 6204<br>
+                Phone: 011111111111 | Email: crescentveterinary@gmail.com
+            </div>
+        </div>
+        
+        <div class="receipt-title">APPOINTMENT INVOICE</div>
+        
+        <div class="receipt-details">
+            <div class="detail-section">
+                <div class="section-title">Appointment Details</div>
+                <div class="detail-row">
+                    <span class="detail-label">Appointment ID:</span>
+                    <span class="detail-value">{{ appointment.appointment_id }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Date Issued:</span>
+                    <span class="detail-value">{% now "d/m/Y" %}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Time Issued:</span>
+                    <span class="detail-value">{% now "h:i A" %}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Service:</span>
+                    <span class="detail-value">{{ appointment.service }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Appointment Time:</span>
+                    <span class="detail-value">
+                        {% if appointment.assigned_date %}
+                            {{ appointment.assigned_date }} at {{ appointment.assigned_time }}
+                        {% else %}
+                            {{ appointment.preferred_date }} at {{ appointment.preferred_time }}
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Status:</span>
+                    <span class="detail-value">{{ appointment.status|title }}</span>
+                </div>
+            </div>
+            
+            <div class="detail-section">
+                <div class="section-title">Customer & Pet Details</div>
+                <div class="detail-row">
+                    <span class="detail-label">Owner Name:</span>
+                    <span class="detail-value">{{ appointment.owner_name }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Phone:</span>
+                    <span class="detail-value">{{ appointment.phone }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Pet Name:</span>
+                    <span class="detail-value">{{ appointment.pet_name }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Species:</span>
+                    <span class="detail-value">{{ appointment.pet_species }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="payment-section">
+            <div class="section-title">Payment Information</div>
+            <div class="payment-amount">Amount: ৳{{ appointment.payment_amount|default:"0.00" }}</div>
+            <div class="payment-status {% if appointment.get_payment_status_display == 'Paid' %}status-paid{% else %}status-pending{% endif %}">
+                Payment Status: {{ appointment.get_payment_status_display }}
+            </div>
+        </div>
+        
+        <div class="footer">
+            Thank you for choosing Crescent Veterinary Clinic!<br>
+            
+        </div>
+        
+        <button class="print-btn" onclick="window.print()">Print Receipt</button>
+    </div>
+</body>
+</html>

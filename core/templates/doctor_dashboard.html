@@ -1,0 +1,1184 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor's Dashboard - Crescent Veterinary Clinic</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --primary-light: #3c546c;
+            --primary-dark: #1a2530;
+            --accent: #3498db;
+            --accent-light: #5dade2;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #f8f9fa;
+            --light-gray: #e9ecef;
+            --medium-gray: #dee2e6;
+            --dark-gray: #6c757d;
+            --text: #2d3748;
+            --text-light: #718096;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f7f9;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            box-shadow: var(--shadow);
+            padding: 0.8rem 1rem;
+            background: var(--primary) !important;
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            overflow: hidden;
+            background: white;
+        }
+        
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .card-header {
+            border-bottom: 1px solid var(--light-gray);
+            font-weight: 600;
+            background: white;
+            color: var(--primary);
+            padding: 1rem 1.25rem;
+        }
+        
+
+        .appointment-card {
+            border-left: 4px solid var(--accent);
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+        
+        .appointment-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .time-slot {
+            background: var(--light);
+            color: var(--primary);
+            padding: 0.6rem;
+            border-radius: 6px;
+            border: 1px solid var(--light-gray);
+            font-weight: 500;
+        }
+        
+        .patient-info h5 {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .badge {
+            font-weight: 500;
+            padding: 0.4em 0.7em;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .badge.bg-info {
+            background: var(--accent) !important;
+        }
+        
+        .badge.bg-warning {
+            background: var(--warning) !important;
+            color: white !important;
+        }
+        
+        .badge.bg-secondary {
+            background: var(--dark-gray) !important;
+        }
+        
+        .btn {
+            border-radius: 6px;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            border: none;
+        }
+        
+        .btn-outline-primary {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline-primary:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+
+        .prescription-modal .modal-content {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+            border: none;
+        }
+        
+        .prescription-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+        }
+        
+        .clinic-logo {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .prescription-section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .prescription-section h6 {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .prescription-section h6 i {
+            margin-right: 0.5rem;
+            color: var(--accent);
+        }
+        
+
+        .quick-actions .card-header {
+            background: white;
+            color: var(--primary);
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .quick-actions .btn {
+            border-radius: 6px;
+            padding: 0.6rem;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--light-gray);
+            margin-bottom: 0.5rem;
+            background: white;
+            color: var(--text);
+        }
+        
+        .quick-actions .btn i {
+            margin-right: 0.5rem;
+            font-size: 1rem;
+            color: var(--accent);
+        }
+        
+        .quick-actions .btn:hover {
+            background: var(--light);
+            border-color: var(--accent);
+        }
+        
+        /* Upcoming Appointments */
+        .upcoming-appt {
+            border-left: 3px solid var(--accent);
+            padding-left: 0.8rem;
+            transition: var(--transition);
+            margin-bottom: 1rem;
+        }
+        
+        .upcoming-appt:hover {
+            background-color: var(--light);
+        }
+        
+        /* Status indicators */
+        .status-badge {
+            padding: 0.35em 0.65em;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 500;
+            background: var(--light-gray);
+            color: var(--dark-gray);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--dark-gray);
+            border-radius: 10px;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+        
+        /* Toast notification */
+        .custom-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            min-width: 300px;
+            border-radius: 6px;
+            box-shadow: var(--shadow-hover);
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            background: white;
+            border-left: 4px solid var(--success);
+            padding: 1rem;
+        }
+        
+        .custom-toast.error {
+            border-left-color: var(--danger);
+        }
+        
+        .custom-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Medication suggestions */
+        .drug-suggestion {
+            padding: 0.6rem;
+            border-bottom: 1px solid var(--light-gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .drug-suggestion:hover {
+            background-color: var(--light);
+        }
+        
+        /* Template buttons */
+        .template-btn {
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid var(--light-gray);
+            background: white;
+        }
+        
+        .template-btn:hover {
+            border-color: var(--accent);
+            background: var(--light);
+        }
+        
+        /* Stats circles */
+        .stat-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid var(--light-gray);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Form controls */
+        .form-control {
+            border-radius: 6px;
+            border: 1px solid var(--medium-gray);
+            padding: 0.6rem 0.75rem;
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.1);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .time-slot {
+                margin-bottom: 1rem;
+            }
+            
+            .appointment-card .btn-group-vertical {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .appointment-card .btn-group-vertical .btn {
+                margin-bottom: 0.5rem;
+            }
+            
+            .stat-circle {
+                width: 60px;
+                height: 60px;
+            }
+        }
+        
+        /* Print styles for prescription */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #prescriptionPreview, #prescriptionPreview * {
+                visibility: visible;
+            }
+            #prescriptionPreview {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .modal-header, .modal-footer {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-clinic-medical me-2"></i>
+                Crescent Veterinary Clinic
+            </a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text me-3">
+                    <i class="fas fa-user-md me-1"></i>
+                    Dr. {{ doctor.name }}
+                </span>
+                <a href="{% url 'logout' %}" class="btn btn-outline-light btn-sm">
+                    <i class="fas fa-sign-out-alt me-1"></i>Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="mb-1"><i class="fas fa-calendar-check me-2 text-primary"></i>Appointment Dashboard</h2>
+                        <p class="text-muted mb-0">{{ today|date:"l, F d, Y" }}</p>
+                    </div>
+                    <div class="text-end">
+                        <div class="d-flex">
+                            <div class="stat-circle me-3">
+                                <div class="text-center">
+                                    <div class="fw-bold text-primary">{{ todays_appointments|length }}</div>
+                                    <small class="text-muted">Today</small>
+                                </div>
+                            </div>
+                            <div class="stat-circle">
+                                <div class="text-center">
+                                    <div class="fw-bold text-success">{{ upcoming_appointments|length }}</div>
+                                    <small class="text-muted">Upcoming</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="row">
+            <!-- Today's Schedule -->
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Today's Schedule</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if todays_appointments %}
+                            {% for appointment in todays_appointments %}
+                                <div class="card appointment-card mb-3 fade-in" style="animation-delay: {{ forloop.counter0|divisibleby:2|yesno:'0.1s,0.2s' }}">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <!-- Time Slot -->
+                                            <div class="col-lg-2">
+                                                <div class="time-slot text-center">
+                                                    <i class="fas fa-clock mb-1"></i><br>
+                                                    <strong>{{ appointment.assigned_time|time:"g:i A" }}</strong>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Patient Info -->
+                                            <div class="col-lg-6">
+                                                <div class="patient-info">
+                                                    <h5 class="mb-2">
+                                                        <i class="fas fa-paw me-2 text-success"></i>
+                                                        {{ appointment.pet_name }}
+                                                        <span class="badge bg-secondary ms-2">{{ appointment.get_pet_species_display }}</span>
+                                                    </h5>
+                                                    
+                                                    <!-- AGE AND WEIGHT BADGES -->
+                                                    {% if appointment.pet_age %}
+                                                    <span class="badge bg-info me-1">Age: {{ appointment.pet_age }}</span>
+                                                    {% endif %}
+                                                    {% if appointment.pet_weight %}
+                                                    <span class="badge bg-warning">Weight: {{ appointment.pet_weight }} kg</span>
+                                                    {% endif %}
+                                                    
+                                                    <p class="mb-1 mt-2">
+                                                        <i class="fas fa-user me-2 text-primary"></i>
+                                                        <strong>Owner:</strong> {{ appointment.owner_name }}
+                                                    </p>
+                                                    <p class="mb-1">
+                                                        <i class="fas fa-phone me-2 text-muted"></i>
+                                                        {{ appointment.phone }}
+                                                    </p>
+                                                    <p class="mb-2">
+                                                        <i class="fas fa-heartbeat me-2 text-danger"></i>
+                                                        <strong>Service:</strong> {{ appointment.service }}
+                                                    </p>
+                                                    {% if appointment.reason %}
+                                                        <div class="alert alert-light py-2 mb-2">
+                                                            <i class="fas fa-notes-medical me-2"></i>
+                                                            <small><strong>Reason:</strong> {{ appointment.reason }}</small>
+                                                        </div>
+                                                    {% endif %}
+                                                    <span class="status-badge">
+                                                        <i class="fas fa-circle me-1"></i>{{ appointment.get_status_display }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <!-- Actions -->
+                                            <div class="col-lg-4 text-end">
+                                                <div class="btn-group-vertical w-100" role="group">
+                                                    <button class="btn btn-primary mb-2 open-prescription-btn" 
+                                                            data-appointment-id="{{ appointment.appointment_id }}"
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#prescriptionModal">
+                                                        <i class="fas fa-prescription-bottle-alt me-2"></i>
+                                                        {% if appointment.prescription %}Edit Prescription{% else %}Write Prescription{% endif %}
+                                                    </button>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <span class="badge bg-{% if appointment.completion_status == 'complete' %}success{% else %}warning{% endif %}">
+                                                        <i class="fas fa-{% if appointment.completion_status == 'complete' %}check-circle{% else %}clock{% endif %} me-1"></i>
+                                                        {{ appointment.get_completion_status_display }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center py-5">
+                                <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                                <h4 class="text-muted">No appointments scheduled for today</h4>
+                                <p class="text-muted">Enjoy your free day!</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Quick Actions -->
+                
+
+                <!-- Upcoming Appointments -->
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Next 7 Days</h6>
+                    </div>
+                    <div class="card-body">
+                        {% if upcoming_appointments %}
+                            {% for appointment in upcoming_appointments %}
+                                <div class="upcoming-appt">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div class="d-flex align-items-center">
+                                            <div class="text-center me-3">
+                                                <div class="fw-bold text-primary">{{ appointment.assigned_date|date:"M j" }}</div>
+                                                <div class="small text-muted">{{ appointment.assigned_time|time:"g:i A" }}</div>
+                                            </div>
+                                            <div>
+                                                <div class="fw-bold text-dark">{{ appointment.pet_name }}</div>
+                                                <div class="small text-muted">{{ appointment.owner_name }}</div>
+                                            </div>
+                                        </div>
+                                        {% if appointment.pet_age or appointment.pet_weight %}
+                                        <div class="text-end">
+                                            {% if appointment.pet_age %}<div class="small text-info">{{ appointment.pet_age }}</div>{% endif %}
+                                            {% if appointment.pet_weight %}<div class="small text-warning">{{ appointment.pet_weight }} kg</div>{% endif %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center text-muted py-3">
+                                <i class="fas fa-calendar-check fa-2x mb-2"></i>
+                                <p class="small mb-0">No upcoming appointments</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Stats Card -->
+                <div class="card mt-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0"><i class="fas fa-external-link-alt me-2"></i>Veterinary Resources</h6>
+                        <button class="btn btn-sm btn-outline-primary" id="refreshStats" style="display: none;">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush">
+                            <a href="https://www.avma.org/" target="_blank" class="list-group-item list-group-item-action">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary text-white p-2 rounded me-3">
+                                        <i class="fas fa-stethoscope"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">AVMA Resources</h6>
+                                        <small class="text-muted">American Veterinary Medical Association</small>
+                                    </div>
+                                    <i class="fas fa-external-link-alt text-muted"></i>
+                                </div>
+                            </a>
+                            
+                            <a href="https://www.merckvetmanual.com/" target="_blank" class="list-group-item list-group-item-action">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-success text-white p-2 rounded me-3">
+                                        <i class="fas fa-book-medical"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">Merck Veterinary Manual</h6>
+                                        <small class="text-muted">Comprehensive veterinary reference</small>
+                                    </div>
+                                    <i class="fas fa-external-link-alt text-muted"></i>
+                                </div>
+                            </a>
+                            
+                            <a href="https://medex.com.bd/brands" target="_blank" class="list-group-item list-group-item-action">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-info text-white p-2 rounded me-3">
+                                        <i class="fas fa-pills"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">Available Drugs</h6>
+                                        <small class="text-muted">Local availability of common drugs</small>
+                                    </div>
+                                    <i class="fas fa-external-link-alt text-muted"></i>
+                                </div>
+                            </a>
+                            
+                            
+                            <a href="https://www.vin.com/" target="_blank" class="list-group-item list-group-item-action">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-danger text-white p-2 rounded me-3">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">Veterinary Information Network</h6>
+                                        <small class="text-muted">Professional community & resources</small>
+                                    </div>
+                                    <i class="fas fa-external-link-alt text-muted"></i>
+                                </div>
+                            </a>
+                            
+                            <a href="https://www.aaha.org/" target="_blank" class="list-group-item list-group-item-action">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-purple text-white p-2 rounded me-3">
+                                        <i class="fas fa-hospital"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0">AAHA Guidelines</h6>
+                                        <small class="text-muted">Accreditation standards</small>
+                                    </div>
+                                    <i class="fas fa-external-link-alt text-muted"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Prescription Modal -->
+    <div class="modal fade prescription-modal" id="prescriptionModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="prescription-header">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="clinic-logo">
+                                <i class="fas fa-clinic-medical me-2"></i>
+                                Crescent Veterinary Clinic
+                            </div>
+                            <div class="clinic-info mt-2">
+                                <small>Professional Veterinary Services</small><br>
+                                <small>Phone: +8801111111111 | Email: info@crescentvet.com</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <h5 class="mb-1">Dr. {{ doctor.name }}</h5>
+                            <small>{{ doctor.specialty }}</small><br>
+                            <small>Date: {{ today|date:"M d, Y" }}</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-body p-4">
+                    <form id="prescriptionForm">
+                        {% csrf_token %}
+                        <input type="hidden" id="currentAppointmentId" value="">
+                        
+                        <!-- Patient Information -->
+                        <div class="prescription-section">
+                            <h6><i class="fas fa-paw me-2"></i>Patient Information</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-2"><strong>Pet Name:</strong> <span id="modalPetName"></span></div>
+                                    <div class="mb-2"><strong>Species:</strong> <span id="modalPetSpecies"></span></div>
+                                    <div class="mb-2"><strong>Age:</strong> <span id="modalPetAge"></span></div>
+                                    <div class="mb-2"><strong>Weight:</strong> <span id="modalPetWeight"></span></div>
+                                    <div class="mb-2"><strong>Service:</strong> <span id="modalService"></span></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-2"><strong>Owner:</strong> <span id="modalOwnerName"></span></div>
+                                    <div class="mb-2"><strong>Phone:</strong> <span id="modalPhone"></span></div>
+                                    <div class="mb-2"><strong>Appointment ID:</strong> <span id="modalAppointmentId"></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Templates -->
+                        <div class="prescription-section">
+                            <h6><i class="fas fa-clipboard-list me-2"></i>Quick Templates</h6>
+                            <div id="templateButtons">
+                                
+                            </div>
+                        </div>
+
+                        <!-- CC -->
+                        <div class="prescription-section">
+                            <h6><i class="fas fa-exclamation-triangle me-2"></i>Chief Complaint</h6>
+                            <textarea class="form-control" id="chiefComplaint" rows="2" 
+                                      placeholder="Why is the patient here today? (e.g., limping, vomiting, routine check-up)"></textarea>
+                        </div>
+
+                        <!--Diagnosis-->
+                        <div class="prescription-section">
+                            <h6><i class="fas fa-diagnoses me-2"></i>Diagnosis</h6>
+                            <textarea class="form-control" id="diagnosis" rows="2" 
+                                      placeholder="Clinical diagnosis (e.g., bacterial infection, arthritis, healthy)"></textarea>
+                        </div>
+
+                        <!--Prescription-->
+                        <div class="prescription-section">
+                            <h6><i class="fas fa-prescription-bottle-alt me-2"></i>Prescription (Rx)</h6>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <textarea class="form-control medication-input" id="medications" rows="6"
+                                              placeholder="1. [Drug Name] [Strength]&#10;   Sig: [Dosing instructions]&#10;&#10;2. [Second medication if needed]&#10;   Sig: [Instructions]"></textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-header py-2">
+                                            <small class="fw-bold">Common Medications</small>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <!-- Search bar -->
+                                            <div class="p-2">
+                                                <input type="text" id="medicationSearch" class="form-control form-control-sm" 
+                                                    placeholder="Search medication...">
+                                            </div>
+                                            <div id="medicationSuggestions" style="max-height: 150px; overflow-y: auto;">
+                                                <!-- Medication suggestions will be loaded here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Instructions -->
+                        <div class="prescription-section">
+                            <h6><i class="fas fa-list-ol me-2"></i>Instructions & Advice</h6>
+                            <textarea class="form-control" id="instructions" rows="3"
+                                      placeholder="Administration instructions, warnings, and general advice for the pet owner"></textarea>
+                        </div>
+
+                        <!-- Follow-up -->
+                        <div class="prescription-section">
+                            <h6><i class="fas fa-calendar-check me-2"></i>Follow-up Care</h6>
+                            <textarea class="form-control" id="followUp" rows="2"
+                                      placeholder="When to return, what to monitor, next steps"></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="me-auto">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="markCompleteCheck">
+                            <label class="form-check-label" for="markCompleteCheck">
+                                Mark as completed
+                            </label>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Cancel
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" id="previewBtn">
+                        <i class="fas fa-eye me-2"></i>Preview
+                    </button>
+                    <button type="button" class="btn btn-primary" id="savePrescriptionBtn">
+                        <i class="fas fa-save me-2"></i>Save Prescription
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="previewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-file-prescription me-2"></i>Prescription Preview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="prescription-preview" id="prescriptionPreview">
+                        <!-- Preview content will be generated here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="window.print()">
+                        <i class="fas fa-print me-2"></i>Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+        let prescriptionTemplates = {};
+        let medicationsDB = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const prescriptionModal = document.getElementById('prescriptionModal');
+            const openPrescriptionBtns = document.querySelectorAll('.open-prescription-btn');
+            const savePrescriptionBtn = document.getElementById('savePrescriptionBtn');
+            const previewBtn = document.getElementById('previewBtn');
+
+            openPrescriptionBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const appointmentId = this.dataset.appointmentId;
+                    openPrescriptionModal(appointmentId);
+                });
+            });
+            savePrescriptionBtn.addEventListener('click', savePrescription);
+            previewBtn.addEventListener('click', showPreview);
+            document.querySelectorAll('.view-prescription-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const prescription = this.dataset.prescription;
+                    showExistingPrescription(prescription);
+                });
+            });
+        });
+
+        async function openPrescriptionModal(appointmentId) {
+            try {
+                //templates and medications)
+                const response = await fetch(`/doctor/prescription-data/${appointmentId}/`);
+                const data = await response.json();
+                
+                prescriptionTemplates = data.templates;
+                medicationsDB = data.medications;
+                document.getElementById('currentAppointmentId').value = appointmentId;
+                const appointmentCard = document.querySelector(`[data-appointment-id="${appointmentId}"]`).closest('.appointment-card');
+                
+
+                const h5 = appointmentCard.querySelector('h5');
+                const petName = Array.from(h5.childNodes)
+                    .filter(node => node.nodeType === Node.TEXT_NODE)
+                    .map(node => node.textContent.trim())
+                    .join(' ')
+                    .trim();
+
+                const ownerName = appointmentCard.querySelector('.patient-info p:first-of-type strong').nextSibling.textContent.trim();
+                const phone = appointmentCard.querySelector('.patient-info p:nth-of-type(2)').textContent.replace(/.*: /, '');
+                const species = appointmentCard.querySelector('.badge').textContent;
+                const service = appointmentCard.querySelector('.patient-info p:nth-of-type(3) strong').nextSibling.textContent.replace(' ', '').trim();
+                const ageBadge = appointmentCard.querySelector('.badge.bg-info');
+                const weightBadge = appointmentCard.querySelector('.badge.bg-warning');
+                
+                const petAge = ageBadge ? ageBadge.textContent.replace('Age: ', '') : '';
+                const petWeight = weightBadge ? weightBadge.textContent.replace('Weight: ', '').replace(' kg', '') : '';
+                
+                // Populate modal fields
+                document.getElementById('modalPetName').textContent = petName;
+                document.getElementById('modalOwnerName').textContent = ownerName;
+                document.getElementById('modalPhone').textContent = phone;
+                document.getElementById('modalPetSpecies').textContent = species;
+                document.getElementById('modalPetAge').textContent = petAge;
+                document.getElementById('modalPetWeight').textContent = petWeight;
+                document.getElementById('modalService').textContent = service;
+                document.getElementById('modalAppointmentId').textContent = appointmentId;
+
+                // Load templates
+                const appointmentResponse = await fetch(`/doctor/get-existing-prescription/${appointmentId}/`);
+                const prescriptionData = await appointmentResponse.json();
+                
+                if (prescriptionData.prescription) {
+                    loadExistingPrescription(prescriptionData.prescription);
+                } else {
+                    clearPrescriptionForm();
+                }
+
+                loadTemplateButtons();
+                loadMedicationSuggestions();
+
+            } catch (error) {
+                console.error('Error loading prescription data:', error);
+                showToast('Error loading prescription data. Please try again.', 'error');
+            }
+        }
+        
+        function loadExistingPrescription(prescription) {
+            // Parse the existing prescription and populate fields
+            const parts = prescription.split('\n\n');
+            
+            parts.forEach(part => {
+                if (part.startsWith('CHIEF COMPLAINT:')) {
+                    document.getElementById('chiefComplaint').value = part.replace('CHIEF COMPLAINT:\n', '');
+                } else if (part.startsWith('DIAGNOSIS:')) {
+                    document.getElementById('diagnosis').value = part.replace('DIAGNOSIS:\n', '');
+                } else if (part.startsWith('PRESCRIPTION (Rx):')) {
+                    document.getElementById('medications').value = part.replace('PRESCRIPTION (Rx):\n', '');
+                } else if (part.startsWith('INSTRUCTIONS:')) {
+                    document.getElementById('instructions').value = part.replace('INSTRUCTIONS:\n', '');
+                } else if (part.startsWith('FOLLOW-UP:')) {
+                    document.getElementById('followUp').value = part.replace('FOLLOW-UP:\n', '');
+                }
+            });
+        }
+
+        function loadTemplateButtons() {
+            const container = document.getElementById('templateButtons');
+            container.innerHTML = '';
+
+            Object.keys(prescriptionTemplates).forEach(key => {
+                const template = prescriptionTemplates[key];
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'btn btn-outline-primary btn-sm template-btn';
+                btn.innerHTML = `<i class="fas fa-clipboard me-1"></i>${template.name}`;
+                btn.onclick = () => applyTemplate(key);
+                container.appendChild(btn);
+            });
+        }
+
+        function loadMedicationSuggestions() {
+            const container = document.getElementById('medicationSuggestions');
+            container.innerHTML = '';
+
+            medicationsDB.forEach(med => {
+                const div = document.createElement('div');
+                div.className = 'drug-suggestion p-2 border-bottom';
+                div.style.cursor = "pointer";
+                div.innerHTML = `
+                    <div class="fw-bold">${med.name}</div>
+                    <small class="text-muted">${med.strengths.join(', ')} | ${med.type}</small>
+                `;
+                div.onclick = () => insertMedication(med);
+                container.appendChild(div);
+            });
+
+            // Attach search event (match from start of drug name)
+            const searchInput = document.getElementById('medicationSearch');
+            searchInput.addEventListener('keyup', function () {
+                const query = this.value.toLowerCase();
+                document.querySelectorAll('#medicationSuggestions .drug-suggestion').forEach(div => {
+                    const drugName = div.querySelector('.fw-bold').textContent.toLowerCase();
+                    div.style.display = drugName.startsWith(query) ? '' : 'none';
+                });
+            });
+        }
+
+
+        function applyTemplate(templateKey) {
+            const template = prescriptionTemplates[templateKey];
+            
+            document.getElementById('diagnosis').value = template.diagnosis;
+            document.getElementById('medications').value = template.medications;
+            document.getElementById('instructions').value = template.instructions;
+            document.getElementById('followUp').value = template.follow_up;
+            
+            showToast('Template applied successfully!', 'success');
+        }
+
+        function insertMedication(medication) {
+            const medicationsField = document.getElementById('medications');
+            const currentText = medicationsField.value;
+            
+            // Find the next medication number
+            const lines = currentText.split('\n');
+            let nextNum = 1;
+            lines.forEach(line => {
+                const match = line.match(/^(\d+)\./);
+                if (match) {
+                    nextNum = Math.max(nextNum, parseInt(match[1]) + 1);
+                }
+            });
+
+            const newMedication = `${nextNum}. ${medication.name} ${medication.strengths[0]}\n   Sig: [Add dosing instructions here]\n\n`;
+            
+            if (currentText.trim()) {
+                medicationsField.value = currentText + '\n' + newMedication;
+            } else {
+                medicationsField.value = newMedication;
+            }
+            
+            // Focus on the field and place cursor at the dosing instruction
+            medicationsField.focus();
+            const pos = medicationsField.value.indexOf('[Add dosing instructions here]');
+            if (pos !== -1) {
+                medicationsField.setSelectionRange(pos, pos + 31);
+            }
+        }
+
+        async function savePrescription() {
+            const appointmentId = document.getElementById('currentAppointmentId').value;
+            const formData = new FormData();
+            
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+            formData.append('chief_complaint', document.getElementById('chiefComplaint').value);
+            formData.append('diagnosis', document.getElementById('diagnosis').value);
+            formData.append('medications', document.getElementById('medications').value);
+            formData.append('instructions', document.getElementById('instructions').value);
+            formData.append('follow_up', document.getElementById('followUp').value);
+            formData.append('mark_complete', document.getElementById('markCompleteCheck').checked);
+            
+            try {
+                const response = await fetch(`/doctor/save-prescription/${appointmentId}/`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast('Prescription saved successfully!', 'success');
+                    
+                    const btn = document.querySelector(`[data-appointment-id="${appointmentId}"]`);
+                    btn.innerHTML = '<i class="fas fa-prescription-bottle-alt me-2"></i>Edit Prescription';
+                    
+                    bootstrap.Modal.getInstance(document.getElementById('prescriptionModal')).hide();
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    showToast('Error saving prescription: ' + data.error, 'error');
+                }
+            } catch (error) {
+                console.error('Error saving prescription:', error);
+                showToast('Error saving prescription. Please try again.', 'error');
+            }
+        }
+
+        function showPreview() {
+            const chiefComplaint = document.getElementById('chiefComplaint').value;
+            const diagnosis = document.getElementById('diagnosis').value;
+            const medications = document.getElementById('medications').value;
+            const instructions = document.getElementById('instructions').value;
+            const followUp = document.getElementById('followUp').value;
+
+            const previewContent = `
+                <div class="prescription-header" style="background: var(--primary); color: white; padding: 20px; margin: -20px -20px 20px -20px;">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4><i class="fas fa-clinic-medical me-2"></i>Crescent Veterinary Clinic</h4>
+                            <p class="mb-0">Professional Veterinary Services</p>
+                            <small>Phone: +8801111111111 | Email: info@crescentvet.com</small>
+                        </div>
+                        <div class="col-6 text-end">
+                            <h5>Dr. {{ doctor.name }}</h5>
+                            <p class="mb-0">{{ doctor.specialty }}</p>
+                            <small>Date: {{ today|date:"M d, Y" }}</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="patient-section mb-4">
+                    <h6 class="border-bottom pb-2">PATIENT INFORMATION</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            <p><strong>Pet Name:</strong> ${document.getElementById('modalPetName').textContent}</p>
+                            <p><strong>Species:</strong> ${document.getElementById('modalPetSpecies').textContent}</p>
+                            <p><strong>Age:</strong> ${document.getElementById('modalPetAge').textContent}</p>
+                            <p><strong>Weight:</strong> ${document.getElementById('modalPetWeight').textContent} kg</p>
+                            <p><strong>Service:</strong> ${document.getElementById('modalService').textContent}</p>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Owner:</strong> ${document.getElementById('modalOwnerName').textContent}</p>
+                            <p><strong>Phone:</strong> ${document.getElementById('modalPhone').textContent}</p>
+                            <p><strong>Appointment ID:</strong> ${document.getElementById('modalAppointmentId').textContent}</p>
+                        </div>
+                    </div>
+                </div>
+
+                ${chiefComplaint ? `
+                <div class="mb-4">
+                    <h6 class="border-bottom pb-2">CHIEF COMPLAINT</h6>
+                    <p>${chiefComplaint.replace(/\n/g, '<br>')}</p>
+                </div>
+                ` : ''}
+
+                ${diagnosis ? `
+                <div class="mb-4">
+                    <h6 class="border-bottom pb-2">DIAGNOSIS</h6>
+                    <p>${diagnosis.replace(/\n/g, '<br>')}</p>
+                </div>
+                ` : ''}
+
+                ${medications ? `
+                <div class="mb-4">
+                    <h6 class="border-bottom pb-2">PRESCRIPTION (Rx)</h6>
+                    <div style="font-family: 'Courier New', monospace; white-space: pre-line; background: #f8f9fa; padding: 15px; border-radius: 5px;">${medications}</div>
+                </div>
+                ` : ''}
+
+                ${instructions ? `
+                <div class="mb-4">
+                    <h6 class="border-bottom pb-2">INSTRUCTIONS & ADVICE</h6>
+                    <p>${instructions.replace(/\n/g, '<br>')}</p>
+                </div>
+                ` : ''}
+
+                ${followUp ? `
+                <div class="mb-4">
+                    <h6 class="border-bottom pb-2">FOLLOW-UP CARE</h6>
+                    <p>${followUp.replace(/\n/g, '<br>')}</p>
+                </div>
+                ` : ''}
+
+                <div class="signature-line mt-5 pt-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="small mb-0">Dr. {{ doctor.name }}</p>
+                            <p class="mb-0">_______________________________</p>
+                            <p class="small">Dept. of {{doctor.specialty}}</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <p class="small mb-0">Date: {{ today|date:"M d, Y" }}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('prescriptionPreview').innerHTML = previewContent;
+            new bootstrap.Modal(document.getElementById('previewModal')).show();
+        }
+
+        function showExistingPrescription(prescription) {
+            document.getElementById('prescriptionPreview').innerHTML = `
+                <div class="prescription-preview">
+                    <h5 class="mb-3">Current Prescription</h5>
+                    <div style="white-space: pre-line; background: #f8f9fa; padding: 20px; border-radius: 5px; border-left: 4px solid var(--primary);">
+                        ${prescription}
+                    </div>
+                </div>
+            `;
+            new bootstrap.Modal(document.getElementById('previewModal')).show();
+        }
+
+        function clearPrescriptionForm() {
+            document.getElementById('chiefComplaint').value = '';
+            document.getElementById('diagnosis').value = '';
+            document.getElementById('medications').value = '';
+            document.getElementById('instructions').value = '';
+            document.getElementById('followUp').value = '';
+        }
+
+        function showToast(message, type) {
+            const existingToasts = document.querySelectorAll('.custom-toast');
+            existingToasts.forEach(toast => toast.remove());
+            
+            const toast = document.createElement('div');
+            toast.className = `custom-toast ${type === 'error' ? 'error' : ''}`;
+            toast.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2 fa-lg ${type === 'success' ? 'text-success' : 'text-danger'}"></i>
+                    <div>${message}</div>
+                    <button type="button" class="btn-close ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.remove();
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

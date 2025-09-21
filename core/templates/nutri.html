@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nutritional Counseling - Crescent Veterinary Clinic</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}"  />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    .service-section {
+      background-color: #eef7fc;
+      padding: 30px 25px;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(111, 168, 220, 0.15);
+    }
+    .service-section h3 {
+      color: #3f4c5c;
+      margin-bottom: 15px;
+      font-weight: 700;
+      border-left: 5px solid #6fa8dc;
+      padding-left: 12px;
+    }
+    .service-section p {
+      color: #334352;
+      font-size: 1.1em;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <h1>Crescent Veterinary Clinic</h1>
+      <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a class="active" href="{% url 'services' %}">Services</a></li>
+        <li><a href="{% url 'home' %}#about">About Us</a></li>
+        <li><a href="{% url 'home' %}#contact">Contact Us</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section-padded">
+      <div class="container">
+        <h2 style="color:#3f4c5c; margin-bottom: 25px;">Nutritional Counseling</h2>
+        <p class="section-description" style="color:#64788a; max-width:700px; margin: 0 auto 40px;">
+          Proper nutrition is vital for your pet’s health, energy, and longevity. Our experts develop personalized nutrition plans to meet your pet’s unique needs.
+        </p>
+
+        <div class="service-section">
+          <h3><i class="fas fa-apple-alt" style="color:#6fa8dc; margin-right: 10px;"></i> Diet Assessment</h3>
+          <p>Comprehensive evaluation of your pet’s current diet to identify nutritional gaps and areas for improvement.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-carrot" style="color:#6fa8dc; margin-right: 10px;"></i> Customized Meal Plans</h3>
+          <p>Tailored diets based on age, breed, health conditions, and lifestyle to optimize wellness.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-prescription-bottle" style="color:#6fa8dc; margin-right: 10px;"></i> Special Diet Recommendations</h3>
+          <p>Guidance on therapeutic diets for pets with allergies, kidney disease, obesity, or other health issues.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-leaf" style="color:#6fa8dc; margin-right: 10px;"></i> Nutritional Supplements</h3>
+          <p>Advice on safe and effective supplements to support joint health, skin, coat, and overall vitality.</p>
+        </div>
+
+        <div class="service-section">
+          <h3><i class="fas fa-book" style="color:#6fa8dc; margin-right: 10px;"></i> Ongoing Support</h3>
+          <p>Regular follow-ups to monitor progress and adjust nutritional plans as your pet’s needs evolve.</p>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Crescent Veterinary Clinic. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

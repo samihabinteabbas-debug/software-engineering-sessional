@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Services - Crescent Veterinary Clinic</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="container">
+      <h1>Crescent Veterinary Clinic</h1>
+      <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a class="active" href="{% url 'services' %}">Services</a></li>
+        <li><a href="{% url 'home' %}#about">About Us</a></li>
+        <li><a href="{% url 'home' %}#contact">Contact Us</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section-padded">
+      <div class="container">
+        <h2>Our Services</h2>
+        <p class="section-description">
+          Learn more about each of our specialized services and the dedicated professionals behind them.
+        </p>
+
+        <div class="service-grid">
+
+          <a href="{% url 'prevcare' %}" class="service-item-link">
+            <div class="service-item">
+              <h3>Preventative Care</h3>
+              <p>Vaccinations, routine exams, and more to keep your pets healthy year-round.</p>
+            </div>
+          </a>
+
+          <a href="{% url 'surg' %}" class="service-item-link">
+            <div class="service-item">
+              <h3>Surgical Procedures</h3>
+              <p>Expert surgical care ranging from routine procedures to advanced operations.</p>
+            </div>
+          </a>
+
+          <a href="{% url 'dent' %}" class="service-item-link">
+            <div class="service-item">
+              <h3>Dental Care</h3>
+              <p>Professional cleanings and dental procedures to ensure oral health.</p>
+            </div>
+          </a>
+
+          <a href="{% url 'diag' %}" class="service-item-link">
+            <div class="service-item">
+              <h3>Diagnostic Imaging</h3>
+              <p>Advanced X-ray and ultrasound services for accurate diagnoses.</p>
+            </div>
+          </a>
+
+          <a href="{% url 'emer' %}" class="service-item-link">
+            <div class="service-item">
+              <h3>Emergency Services</h3>
+              <p>Prompt care for critical and urgent health issues during clinic hours.</p>
+            </div>
+          </a>
+
+          <a href="{% url 'nutri' %}" class="service-item-link">
+            <div class="service-item">
+              <h3>Nutritional Counseling</h3>
+              <p>Tailored nutrition advice to suit your pet's health and lifestyle.</p>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Crescent Veterinary Clinic. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

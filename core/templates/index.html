@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crescent Veterinary Clinic</title>
+   <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <h1>Crescent Veterinary Clinic</h1>
+      <ul>
+        <li><a href="{% url 'services' %}">Services</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'profile' %}">My Profile</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+   <section class="hero">
+  <div class="container">
+    <h2>Welcome to Crescent!</h2>
+    <p>Your pet’s health is our top priority, and we're dedicated to providing exceptional care for your beloved companions.</p>
+
+    <div class="login-options">
+      <div><a href="{% url 'services' %}" class="btn primary">Discover More</a></div>
+      <div style="margin-top: 25px;"><a href="{% url 'appt' %}" class="btn primary">Book an Appointment</a></div>
+    </div>
+  </div>
+</section>
+   <section id="services" class="section-padded">
+  <div class="container">
+    <h2>Our Services</h2>
+    <p class="section-description">We offer a comprehensive range of veterinary services to ensure your pet's well-being.</p>
+    <div class="service-grid">
+
+      <a href="{% url 'prevcare' %}" class="service-item-link">
+        <div class="service-item">
+          <h3>Preventative Care</h3>
+          <p>Routine check-ups, vaccinations, and parasite control to keep your pet healthy.</p>
+        </div>
+      </a>
+
+      <a href="{% url 'surg' %}" class="service-item-link">
+        <div class="service-item">
+          <h3>Surgical Procedures</h3>
+          <p>From routine spays/neuters to more complex surgeries, performed with utmost care.</p>
+        </div>
+      </a>
+
+      <a href="{% url 'dent' %}" class="service-item-link">
+        <div class="service-item">
+          <h3>Dental Care</h3>
+          <p>Professional dental cleanings and extractions for optimal oral health.</p>
+        </div>
+      </a>
+
+      <a href="{% url 'diag' %}" class="service-item-link">
+        <div class="service-item">
+          <h3>Diagnostic Imaging</h3>
+          <p>Advanced X-ray and ultrasound services for accurate diagnoses.</p>
+        </div>
+      </a>
+
+      <a href="{% url 'emer' %}" class="service-item-link">
+        <div class="service-item">
+          <h3>Emergency Services</h3>
+          <p>Urgent care for unexpected illnesses or injuries during business hours.</p>
+        </div>
+      </a>
+
+      <a href="{% url 'nutri' %}" class="service-item-link">
+        <div class="service-item">
+          <h3>Nutritional Counseling</h3>
+          <p>Personalized dietary advice to support your pet's specific needs.</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+    <section id="about" class="section-padded subtle-bg">
+      <div class="container">
+        <div class="about-content">
+          <h2>About Us</h2>
+          <p class="section-description">Crescent Veterinary Clinic has been serving the community for over 15 years, providing compassionate and high-quality veterinary care. Our team of experienced veterinarians and dedicated staff are passionate about animal health and committed to building lasting relationships with our clients and their beloved pets.</p>
+          <p>We believe in a holistic approach to pet care, combining modern medicine with a deep understanding of each animal's unique needs. Your pet's comfort and well-being are always our top priority.</p>
+          <a href="{% url 'ourteam' %}" class="btn secondary">Meet Our Team</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section-padded">
+      <div class="container">
+        <h2>Contact Us</h2>
+        <p class="section-description">Have questions or want to schedule an appointment? Reach out to us!</p>
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Our Location</h3>
+            <p>123, Rajshahi, 6204</p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <h3>Call Us</h3>
+            <p><a href="tel:+8801111111111">+8801111111111</a></p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <h3>Email Us</h3>
+            <p><a href="mailto:crescentveterinary@gmail.com">crescentveterinary@gmail.com</a></p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-clock"></i>
+            <h3>Business Hours</h3>
+            <p>Sat - Fri: 9:00 AM - 5:00 PM</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-padded social-section">
+      <div class="container">
+        <h2>Stay With Us</h2>
+        <p class="section-description">Follow us on social media for updates, pet care tips, and more!</p>
+        <div class="social-links">
+          <a href="https://www.facebook.com/crescentveterinaryclinic" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/crescentveterinaryclinic" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://x.com/crescentveterinaryclinic" target="_blank" aria-label="X"><i class="fab fa-x"></i></a>
+          <a href="https://www.youtube.com/crescentveterinaryclinic" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; {% now "Y" %} Crescent Veterinary Clinic. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

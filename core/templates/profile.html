@@ -1,0 +1,331 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile - Crescent Veterinary Clinic</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Trebuchet+MS:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Profile-specific additions that match your existing style */
+        .profile-section {
+            padding: 60px 0;
+            background-color: #fdfbf8;
+        }
+
+        .profile-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-header h2 {
+            color: #3f4c5c;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .user-info-section {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f0f0f0;
+            margin-bottom: 40px;
+        }
+
+        .user-info-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .user-info-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .user-info-item strong {
+            display: block;
+            color: #6fa8dc;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .user-info-item p {
+            color: #4a4a4a;
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        .appointments-header {
+            text-align: center;
+            margin: 50px 0 30px;
+        }
+
+        .appointments-header h3 {
+            color: #3f4c5c;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .appointments-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .appointments-table thead {
+            background-color: #eef7fc;
+        }
+
+        .appointments-table th {
+            padding: 16px;
+            text-align: left;
+            color: #3f4c5c;
+            font-weight: 700;
+            border-bottom: 2px solid #d6e6f2;
+        }
+
+        .appointments-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #4a4a4a;
+        }
+
+        .appointments-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .appointments-table tr:hover {
+            background-color: #f7fbfe;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .status-pending { 
+            background-color: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+        .status-confirmed { 
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+        .status-completed { 
+            background-color: rgba(108, 117, 125, 0.1);
+            color: #6c757d;
+        }
+        .status-cancelled { 
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+
+        .empty-appointments {
+            text-align: center;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            margin-top: 30px;
+        }
+
+        .empty-appointments i {
+            font-size: 3em;
+            color: #6fa8dc;
+            margin-bottom: 20px;
+        }
+
+        .empty-appointments p {
+            color: #4a4a4a;
+            font-size: 1.1em;
+            margin-bottom: 25px;
+        }
+
+        .profile-actions {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-home-link {
+            display: inline-flex;
+            align-items: center;
+            color: #6fa8dc;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .back-home-link i {
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-home-link:hover {
+            color: #5a95c9;
+        }
+
+        .back-home-link:hover i {
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .appointments-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .profile-header h2 {
+                font-size: 2em;
+            }
+            
+            .appointments-header h3 {
+                font-size: 1.6em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <h1>Crescent Veterinary Clinic</h1>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'services' %}">Services</a></li>
+                <li><a href="{% url 'home' %}#about">About Us</a></li>
+                <li><a href="{% url 'home' %}#contact">Contact Us</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}" class="active">My Profile</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <main class="profile-section">
+        <div class="profile-container">
+            <div class="profile-header">
+                <h2>Welcome, {{ user.first_name|default:user.username }}</h2>
+                <p>Here's your profile information and appointment history</p>
+            </div>
+            
+            <div class="user-info-section">
+                <div class="user-info-item">
+                    <strong>Username</strong>
+                    <p>{{ request.user.username }}</p>
+                </div>
+                <div class="user-info-item">
+                    <strong>Full Name</strong>
+                    <p>{{ user.first_name }} {{ user.last_name }}</p>
+                </div>
+                <div class="user-info-item">
+                    <strong>Email</strong>
+                    <p>{{ user.email }}</p>
+                </div>
+            </div>
+            
+            <div class="appointments-header">
+                <h3>Your Appointments</h3>
+            </div>
+            
+            {% if appointments %}
+                <table class="appointments-table">
+                    <thead>
+                        <tr>
+                            <th>Appointment ID</th>
+                            <th>Pet</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Documents</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for appt in appointments %}
+                    <tr>
+                        <td>{{ appt.appointment_id }}</td>
+                        <td>{{ appt.pet_name }} ({{ appt.pet_species|title }})</td>
+                        <td>
+                        {% if appt.assigned_doctor %}
+                            Dr. {{ appt.assigned_doctor.name }}
+                        {% else %}
+                            Not assigned
+                        {% endif %}
+                        </td>
+                        <td>{{ appt.assigned_date|default:appt.preferred_date|date:"F d, Y" }}</td>
+                        <td>{{ appt.assigned_time|default:appt.preferred_time|time:"h:i A" }}</td>
+                        <td>{{ appt.reason|truncatechars:30 }}</td>
+                        <td><span class="status status-{{ appt.status }}">{{ appt.status|title }}</span></td>
+                        <td>
+                            <!-- Prescription link for completed appointments -->
+                            {% if appt.payment_status == 'paid' %}
+                                {% if appt.prescription %}
+                                <a href="{% url 'prescription_pdf' appt.appointment_id %}" 
+                                   target="_blank" 
+                                   class="btn-prescription"
+                                   title="View Prescription">
+                                    <i class="fas fa-file-prescription"></i>Prescription
+                                </a>
+                                {% else %}
+                                <span class="no-prescription"><i class="fas fa-file-prescription">  </i>Incomplete  </span>
+                                {% endif %}
+                            {% else %}
+                                <span class="not-completed"><i class="fas fa-file-prescription">  </i>Unavailable  </span>
+                            {% endif %}
+                            <br>
+                            <!-- Receipt link for all appointments -->
+                            <a href="{% url 'receipt' appt.appointment_id %}" 
+                               target="_blank" 
+                               class="btn-receipt"
+                               title="View Receipt">
+                                <i class="fas fa-receipt"></i>Receipt
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="empty-appointments">
+                    <i class="far fa-calendar-alt"></i>
+                    <p>You don't have any appointments yet.</p>
+                    <a href="{% url 'appt' %}" class="btn secondary">Book an Appointment</a>
+                </div>
+            {% endif %}
+            
+            <div class="profile-actions">
+                <a href="{% url 'home' %}" class="back-home-link">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Crescent Veterinary Clinic. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
